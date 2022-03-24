@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 public class croquis extends View {
 
     public LayoutParams params;
-    private Path path = new Path();
+    private Path dessin = new Path();
     private Paint pinceau = new Paint();
 
     public croquis(Context context, @Nullable AttributeSet attrs) {
@@ -31,5 +31,32 @@ public class croquis extends View {
 
         params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawPath(dessin ,pinceau);
+    }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                dessin.moveTo(x,y);
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                dessin.lineTo(x,y);
+                break;
+            default:
+                return false;
+        }
+        postInvalidate();
+        return false;
+    }
 }
