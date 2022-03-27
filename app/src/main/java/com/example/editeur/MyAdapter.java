@@ -1,6 +1,7 @@
 package com.example.editeur;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,17 +47,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             public boolean onLongClick(View v) {
 
                 PopupMenu menu = new PopupMenu(context,v);
-                menu.getMenu().add("DELETE");
+                menu.getMenu().add("Delete");
+                menu.getMenu().add("Modify");
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        if(item.getTitle().equals("DELETE")){
+                        if(item.getTitle().equals("Delete")){
                             //delete the note
                             Realm realm = Realm.getDefaultInstance();
                             realm.beginTransaction();
                             note.deleteFromRealm();
                             realm.commitTransaction();
-                            Toast.makeText(context,"Note deleted",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"Page deleted",Toast.LENGTH_SHORT).show();
+                        }
+                        if(item.getTitle().equals("modify")){
+                            //modify
+
                         }
                         return true;
                     }
